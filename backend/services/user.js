@@ -47,7 +47,8 @@ class UserService {
      */
     static verify(token) {
         try {
-            const { id, username } = jwt.verify(token.split(" ")[1], SECRET_KEY);
+            const tokenValue = token.startsWith('Bearer ') ? token.split(" ")[1] : token;
+        const { id, username } = jwt.verify(tokenValue, SECRET_KEY);
             const user = users[id - 1];
     
             if (!user || username !== user.username) {
